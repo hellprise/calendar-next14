@@ -77,10 +77,24 @@ export function Calendar(): JSX.Element {
 
 		items.forEach((event, index) => {
 			if (index === dragIndexRef?.current?.index) {
-				updateEventDate({ event, date: dragDateRef?.current?.date as unknown as Date })
+				
+				updateEventDate({ event, date: dateToString(dragDateRef?.current?.date as unknown as Date) })
 			}
 		})
 	}
+
+	// const drop = (ev) => {
+  //   ev.preventDefault();
+
+  //   setEvents((prev) =>
+  //     prev.map((ev, index) => {
+  //       if (index === dragindexRef.current.index) {
+  //         ev.date = dragDateRef.current.date;
+  //       }
+  //       return ev;
+  //     })
+  //   );
+  // };
 
 	const handleOnClickEvent = (event: TFullPublicHoliday) => {
 		setIsShowPortal(true)
@@ -205,6 +219,7 @@ const EventWrapper: FC<{
 	drag: (index: number, e: DragEvent<HTMLElement>) => void
 	handleOnClickEvent: (event: TFullPublicHoliday) => void
 }> = ({ currentDate, day, drag, handleOnClickEvent, items }) => {
+
 	const itemsInCurrentDay = items.filter(event =>
 		datesAreOnSameDay(new Date(event.date), new Date(currentDate.getFullYear(), currentDate.getMonth(), day))
 	)
@@ -215,7 +230,7 @@ const EventWrapper: FC<{
 
 	return (
 		<section>
-			{/* {items.map(
+			{items.map(
 				(event, index) =>
 					datesAreOnSameDay(new Date(event.date), new Date(currentDate.getFullYear(), currentDate.getMonth(), day)) && (
 						<StyledEvent
@@ -230,8 +245,8 @@ const EventWrapper: FC<{
 							{event.fixed ? event.localName : event.name}
 						</StyledEvent>
 					)
-			)} */}
-			{itemsInCurrentDay.map((event, index) => (
+			)}
+			{/* {itemsInCurrentDay.map((event, index) => (
 				<StyledEvent
 					onDragStart={e => drag(index, e)}
 					onClick={() => handleOnClickEvent(event)}
@@ -243,7 +258,7 @@ const EventWrapper: FC<{
 				>
 					{event.fixed ? event.localName : event.name}
 				</StyledEvent>
-			))}
+			))} */}
 		</section>
 	)
 }

@@ -4,7 +4,6 @@ import { mockEvents } from '@/data/calendar'
 
 import { TFullPublicHoliday } from '@/types/calendar'
 
-import { dateToString } from '@/utils/calendar'
 
 import { IEventsInitialState } from './events.types'
 
@@ -19,13 +18,13 @@ export const eventsSlice = createSlice({
 		addEvent: (state, { payload }: PayloadAction<TFullPublicHoliday[]>) => {
 			state.items = [...state.items, ...payload]
 		},
-		updateEventDate: (state, { payload }: PayloadAction<{ event: TFullPublicHoliday; date: Date }>) => {
+		updateEventDate: (state, { payload }: PayloadAction<{ event: TFullPublicHoliday; date: string }>) => {
 			const { event, date } = payload
-
+    
 			const updatedEvent = state.items.find(e => e.id === event.id)
 
 			if (updatedEvent) {
-				updatedEvent.date = dateToString(date)
+				updatedEvent.date = date
 			}
 
 			state.items = [...state.items]
